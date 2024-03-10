@@ -231,6 +231,7 @@ pub enum Enum<'src> {
 	Tagged {
 		tag: &'src str,
 		variants: Vec<(&'src str, Struct<'src>)>,
+		catch_all: Option<Struct<'src>>,
 	},
 }
 
@@ -298,9 +299,7 @@ impl<'src> Struct<'src> {
 
 			if let Some(ty_max) = ty_max {
 				if let Some(current_max) = max {
-					if ty_max > current_max {
-						max = Some(ty_max);
-					}
+					max = Some(ty_max + current_max);
 				}
 			} else {
 				max = None;
